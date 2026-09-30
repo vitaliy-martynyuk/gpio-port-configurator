@@ -19,7 +19,7 @@ namespace gpio
 			reg = clearedBits | (shiftedBits & mask);
 		}
 
-		std::uint8_t getPinBits(const Register& reg, PinId pin, PinWidthBits width)
+		std::uint8_t getPinBits(const Register reg, PinId pin, PinWidthBits width)
 		{
 			const Register mask{ helpers::fieldMask(pin, width) };
 			const auto pinPosition{ helpers::getPinPosition(pin, width) };
@@ -30,10 +30,7 @@ namespace gpio
 
 	void configurePin(GpioPort& port, PinId pin, const PinConfig& config)
 	{
-		if (!helpers::isPinValid(pin)) {
-			assert(false && "Invalid pin ID!");
-			std::abort();
-		}
+		helpers::validatePin(pin);
 
 		setPinBits(port.pupdr, pin, PinWidthBits::two, config.pull);
 		setPinBits(port.otyper, pin, PinWidthBits::one, config.outputType);
@@ -43,18 +40,19 @@ namespace gpio
 
 	std::optional<PinConfig> readPinConfig(const GpioPort& port, PinId pin)
 	{
+		helpers::validatePin(pin);
+
 		const auto pupdrV{ getPinBits(port.pupdr, pin, PinWidthBits::two) };
-		if (pupdrV == static_cast<std::uint8_t>(Pull::invalid)) return std::nullopt;
+		if (pupdrV == constants::reservedPullEncoding) return std::nullopt;
 		const auto otyperV{ getPinBits(port.otyper, pin, PinWidthBits::one) };
 		const auto ospeedrV{ getPinBits(port.ospeedr, pin, PinWidthBits::two) };
 		const auto moderV{ getPinBits(port.moder, pin, PinWidthBits::two) };
 
-		PinConfig config{};
-		config.mode = static_cast<PinMode>(moderV);
-		config.outputType = static_cast<OutputType>(otyperV);
-		config.speed = static_cast<Speed>(ospeedrV);
-		config.pull = static_cast<Pull>(pupdrV);
-
-		return config;
+		return PinConfig{
+			.mode = static_cast<PinMode>(moderV),
+			.outputType = static_cast<OutputType>(otyperV),
+			.speed = static_cast<Speed>(ospeedrV),
+			.pull = static_cast<Pull>(pupdrV),
+		};
 	}
 }

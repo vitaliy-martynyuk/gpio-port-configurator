@@ -32,7 +32,6 @@ namespace gpio
 		none		= 0b00,
 		up			= 0b01,
 		down		= 0b10,
-		invalid		= 0b11,
 	};
 
 	enum class PinWidthBits : std::uint8_t
