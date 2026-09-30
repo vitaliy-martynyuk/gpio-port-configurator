@@ -17,7 +17,7 @@ namespace gpio
 			return pin <= gpio::constants::maxPin;
 		}
 
-		void validatePin(PinId pin)
+		inline constexpr void validatePin(PinId pin)
 		{
 			if (!helpers::isPinValid(pin)) {
 				assert(false && "Invalid pin ID!");
