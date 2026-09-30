@@ -145,9 +145,11 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="gpio\gpio.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="gpio\gpio.h" />
     <ClInclude Include="gpio\_constants.h" />
     <ClInclude Include="gpio\_enums.h" />
     <ClInclude Include="gpio\_helpers.h" />

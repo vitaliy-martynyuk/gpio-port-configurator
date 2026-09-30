@@ -3,11 +3,14 @@
 
 #include "_types.h"
 
-namespace Constants
+namespace gpio
 {
-	inline constexpr GpioPort resetPort{ .moder = 0b1111'1111'1111'1111'1111'1111'1111'1111 };
-	inline constexpr PinId maxPin{ 15 };
-	inline constexpr PinId minPin{ 0 };
+	namespace constants
+	{
+		inline constexpr GpioPort resetPort{ .moder = 0b1111'1111'1111'1111'1111'1111'1111'1111 };
+		inline constexpr PinId maxPin{ 15 };
+		inline constexpr PinId minPin{ 0 };
+	}
 }
 
 #endif

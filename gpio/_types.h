@@ -4,35 +4,38 @@
 #include "_enums.h"
 #include <cstdint>
 
-using PinId = std::uint8_t;
-using Register = std::uint32_t;
-
-struct PinConfig
+namespace gpio
 {
-	PinMode mode{ PinMode::analog };
-	OutputType outputType{ OutputType::pushPull };
-	Speed speed{ Speed::low };
-	Pull pull{ Pull::none };
-};
+	using PinId = std::uint8_t;
+	using Register = std::uint32_t;
 
-struct GpioPort
-{
-	Register moder{ 0b0000'0000'0000'0000'0000'0000'0000'0000 };
-	Register otyper{ 0b0000'0000'0000'0000'0000'0000'0000'0000 };
-	Register ospeedr{ 0b0000'0000'0000'0000'0000'0000'0000'0000 };
-	Register pupdr{ 0b0000'0000'0000'0000'0000'0000'0000'0000 };
-	Register idr{ 0b0000'0000'0000'0000'0000'0000'0000'0000 };
-	Register odr{ 0b0000'0000'0000'0000'0000'0000'0000'0000 };
-};
+	struct PinConfig
+	{
+		PinMode mode{ PinMode::analog };
+		OutputType outputType{ OutputType::pushPull };
+		Speed speed{ Speed::low };
+		Pull pull{ Pull::none };
+	};
 
-template <typename T>
-struct Snapshot
-{
-	T before{};
-	T after{};
-};
+	struct GpioPort
+	{
+		Register moder{ 0b0000'0000'0000'0000'0000'0000'0000'0000 };
+		Register otyper{ 0b0000'0000'0000'0000'0000'0000'0000'0000 };
+		Register ospeedr{ 0b0000'0000'0000'0000'0000'0000'0000'0000 };
+		Register pupdr{ 0b0000'0000'0000'0000'0000'0000'0000'0000 };
+		Register idr{ 0b0000'0000'0000'0000'0000'0000'0000'0000 };
+		Register odr{ 0b0000'0000'0000'0000'0000'0000'0000'0000 };
+	};
 
-template <typename T>
-Snapshot(T, T) -> Snapshot<T>;
+	template <typename T>
+	struct Snapshot
+	{
+		T before{};
+		T after{};
+	};
+
+	template <typename T>
+	Snapshot(T, T) -> Snapshot<T>;
+}
 
 #endif

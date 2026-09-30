@@ -1,15 +1,14 @@
 #include <iostream>
 #include <bitset>
 #include <cstdint>
-#include "gpio/_enums.h"
-#include "gpio/_helpers.h"
+#include "gpio/gpio.h"
 
 int main()
 {
-	std::cout << std::bitset<32>{Helpers::fieldMask(0, PinWidthBits::one)} << '\n';
-	std::cout << std::bitset<32>{Helpers::fieldMask(0, PinWidthBits::two)} << '\n';
-	std::cout << std::bitset<32>{Helpers::fieldMask(15, PinWidthBits::one)} << '\n';
-	std::cout << std::bitset<32>{Helpers::fieldMask(15, PinWidthBits::two)} << '\n';
+	std::cout << std::bitset<32>{gpio::helpers::fieldMask(0, gpio::PinWidthBits::one)} << '\n';
+	std::cout << std::bitset<32>{gpio::helpers::fieldMask(0, gpio::PinWidthBits::two)} << '\n';
+	std::cout << std::bitset<32>{gpio::helpers::fieldMask(15, gpio::PinWidthBits::one)} << '\n';
+	std::cout << std::bitset<32>{gpio::helpers::fieldMask(15, gpio::PinWidthBits::two)} << '\n';
 
 	return 0;
 }

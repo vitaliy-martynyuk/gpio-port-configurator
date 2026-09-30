@@ -6,26 +6,30 @@
 #include "_constants.h"
 #include <cstdint>
 #include <cassert>
+#include <cstdlib>
 
-namespace Helpers
+namespace gpio
 {
-	inline constexpr bool isPinValid(PinId pin)
+	namespace helpers
 	{
-		return pin <= Constants::maxPin;
-	}
-
-	inline constexpr std::uint32_t fieldMask(PinId pin, PinWidthBits width)
-	{
-		constexpr std::uint32_t mask{ 0b0000'0000'0000'0000'0000'0000'0000'0000 };
-		if (!isPinValid(pin)) {
-			assert(false && "Invalid pin ID!");
-			return mask;
+		inline constexpr bool isPinValid(PinId pin)
+		{
+			return pin <= gpio::constants::maxPin;
 		}
 
-		const std::uint32_t pinMask{ (1u << static_cast<std::uint32_t>(width)) - 1u };
-		const auto pinPosition{ pin * static_cast<std::uint8_t>(width) };
+		inline constexpr std::uint32_t fieldMask(PinId pin, PinWidthBits width)
+		{
+			constexpr std::uint32_t mask{ 0b0000'0000'0000'0000'0000'0000'0000'0000 };
+			if (!isPinValid(pin)) {
+				assert(false && "Invalid pin ID!");
+				std::abort();
+			}
 
-		return mask | (pinMask << pinPosition);
+			const std::uint32_t pinMask{ (1u << static_cast<std::uint32_t>(width)) - 1u };
+			const auto pinPosition{ pin * static_cast<std::uint8_t>(width) };
+
+			return mask | (pinMask << pinPosition);
+		}
 	}
 }
 
