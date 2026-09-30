@@ -1,39 +1,11 @@
 #ifndef TYPES_H
 #define TYPES_H
 
+#include "enums.h"
 #include <cstdint>
 
 using PinId = std::uint8_t;
 using Register = std::uint32_t;
-
-enum class PinMode : std::uint8_t
-{
-	input		= 0b00,
-	output		= 0b01,
-	alternate	= 0b10,
-	analog		= 0b11,
-};
-
-enum class OutputType : std::uint8_t
-{
-	pushPull,
-	openDrain,
-};
-
-enum class Speed : std::uint8_t
-{
-	low,
-	medium,
-	high,
-	veryHigh,
-};
-
-enum class Pull : std::uint8_t
-{
-	none,
-	up,
-	down,
-};
 
 struct PinConfig
 {

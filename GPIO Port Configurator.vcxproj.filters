@@ -26,5 +26,11 @@
     <ClInclude Include="gpio\constants.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="gpio\helpers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gpio\enums.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
