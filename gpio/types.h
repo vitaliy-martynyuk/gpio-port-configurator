@@ -3,26 +3,24 @@
 
 #include <cstdint>
 
-using std::uint8_t;
-using std::uint32_t;
-using PinId = uint8_t;
-using Register = uint32_t;
+using PinId = std::uint8_t;
+using Register = std::uint32_t;
 
-enum class PinMode : uint8_t
+enum class PinMode : std::uint8_t
 {
-	input,
-	output,
-	alternate,
-	analog,
+	input		= 0b00,
+	output		= 0b01,
+	alternate	= 0b10,
+	analog		= 0b11,
 };
 
-enum class OutputType : uint8_t
+enum class OutputType : std::uint8_t
 {
 	pushPull,
 	openDrain,
 };
 
-enum class Speed : uint8_t
+enum class Speed : std::uint8_t
 {
 	low,
 	medium,
@@ -30,7 +28,7 @@ enum class Speed : uint8_t
 	veryHigh,
 };
 
-enum class Pull : uint8_t
+enum class Pull : std::uint8_t
 {
 	none,
 	up,
