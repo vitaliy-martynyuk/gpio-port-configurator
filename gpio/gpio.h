@@ -1,7 +1,6 @@
 #ifndef GPIO_H
 #define GPIO_H
 
-#include "_tests.h"
 #include "_constants.h"
 #include "_enums.h"
 #include "_helpers.h"
@@ -12,11 +11,11 @@
 namespace gpio
 {
 	void configurePin(GpioPort& port, PinId pin, const PinConfig& config);
-	std::optional<PinConfig> readPinConfig(const GpioPort& port, PinId pin);
+	[[nodiscard]] std::optional<PinConfig> readPinConfig(const GpioPort& port, PinId pin);
 	void applyBsrr(GpioPort& port, std::uint32_t bsrr);
 	void writePin(GpioPort& port, PinId pin, bool level);
 	void sampleInputs(GpioPort& port, std::uint16_t externalLevels);
-	bool readPin(const GpioPort& port, PinId pin);
+	[[nodiscard]] bool readPin(const GpioPort& port, PinId pin);
 	template <typename T>
 	T changedBits(const Snapshot<T>& snapshot) {};
 }
