@@ -1,8 +1,8 @@
 #include <iostream>
 #include <bitset>
 #include <cstdint>
-#include "gpio/enums.h"
-#include "gpio/helpers.h"
+#include "gpio/_enums.h"
+#include "gpio/_helpers.h"
 
 int main()
 {

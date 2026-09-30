@@ -1,8 +1,8 @@
 #ifndef HELPERS_H
 #define HELPERS_H
 
-#include "types.h"
-#include "enums.h"
+#include "_types.h"
+#include "_enums.h"
 #include <cstdint>
 
 namespace Helpers

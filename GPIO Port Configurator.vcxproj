@@ -148,10 +148,11 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="gpio\constants.h" />
-    <ClInclude Include="gpio\enums.h" />
-    <ClInclude Include="gpio\helpers.h" />
-    <ClInclude Include="gpio\types.h" />
+    <ClInclude Include="gpio\_constants.h" />
+    <ClInclude Include="gpio\_enums.h" />
+    <ClInclude Include="gpio\_helpers.h" />
+    <ClInclude Include="gpio\_tests.h" />
+    <ClInclude Include="gpio\_types.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

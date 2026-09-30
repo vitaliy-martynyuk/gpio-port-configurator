@@ -20,16 +20,19 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="gpio\types.h">
+    <ClInclude Include="gpio\_types.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="gpio\constants.h">
+    <ClInclude Include="gpio\_constants.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="gpio\helpers.h">
+    <ClInclude Include="gpio\_helpers.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="gpio\enums.h">
+    <ClInclude Include="gpio\_enums.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gpio\_tests.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

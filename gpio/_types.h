@@ -1,7 +1,7 @@
 #ifndef TYPES_H
 #define TYPES_H
 
-#include "enums.h"
+#include "_enums.h"
 #include <cstdint>
 
 using PinId = std::uint8_t;
