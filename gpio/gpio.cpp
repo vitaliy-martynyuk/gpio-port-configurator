@@ -24,7 +24,7 @@ namespace gpio
 			const Register mask{ helpers::fieldMask(pin, width) };
 			const auto pinPosition{ helpers::getPinPosition(pin, width) };
 
-			return (reg & mask) >> pinPosition;
+			return static_cast<std::uint8_t>((reg & mask) >> pinPosition);
 		}
 	}
 

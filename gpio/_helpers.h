@@ -17,9 +17,14 @@ namespace gpio
 			return pin <= gpio::constants::maxPin;
 		}
 
-		inline constexpr std::uint16_t getPinPosition(PinId pin, PinWidthBits width)
+		inline constexpr std::uint8_t getPinPosition(PinId pin, PinWidthBits width)
 		{
-			return pin * static_cast<std::uint8_t>(width);
+			if (!isPinValid(pin)) {
+				assert(false && "Invalid pin ID!");
+				std::abort();
+			}
+
+			return static_cast<std::uint8_t>(pin * static_cast<std::uint8_t>(width));
 		}
 
 		inline constexpr Register fieldMask(PinId pin, PinWidthBits width)
