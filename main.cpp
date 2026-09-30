@@ -6,7 +6,10 @@
 
 int main()
 {
+	std::cout << std::bitset<32>{Helpers::fieldMask(0, PinWidthBits::one)} << '\n';
+	std::cout << std::bitset<32>{Helpers::fieldMask(0, PinWidthBits::two)} << '\n';
 	std::cout << std::bitset<32>{Helpers::fieldMask(15, PinWidthBits::one)} << '\n';
+	std::cout << std::bitset<32>{Helpers::fieldMask(15, PinWidthBits::two)} << '\n';
 
 	return 0;
 }

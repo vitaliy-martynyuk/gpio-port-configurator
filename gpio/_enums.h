@@ -13,23 +13,23 @@ enum class PinMode : std::uint8_t
 
 enum class OutputType : std::uint8_t
 {
-	pushPull,
-	openDrain,
+	pushPull	= 0b00,
+	openDrain	= 0b01,
 };
 
 enum class Speed : std::uint8_t
 {
-	low,
-	medium,
-	high,
-	veryHigh,
+	low			= 0b00,
+	medium		= 0b01,
+	high		= 0b10,
+	veryHigh	= 0b11,
 };
 
 enum class Pull : std::uint8_t
 {
-	none,
-	up,
-	down,
+	none		= 0b00,
+	up			= 0b01,
+	down		= 0b10,
 };
 
 enum class PinWidthBits : std::uint8_t
