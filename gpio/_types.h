@@ -1,5 +1,5 @@
-#ifndef TYPES_H
-#define TYPES_H
+#ifndef GPIO_TYPES_H
+#define GPIO_TYPES_H
 
 #include "_enums.h"
 #include <cstdint>

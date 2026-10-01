@@ -1,5 +1,5 @@
-#ifndef ENUMS_H
-#define ENUMS_H
+#ifndef GPIO_ENUMS_H
+#define GPIO_ENUMS_H
 
 #include <cstdint>
 

@@ -1,7 +1,5 @@
-#include "_tests.h"
 #include "gpio.h"
-#include <cassert>
-#include <cstdlib>
+#include "_tests.h"
 #include <cstdint>
 #include <optional>
 
@@ -19,7 +17,7 @@ namespace gpio
 			reg = clearedBits | (shiftedBits & mask);
 		}
 
-		std::uint8_t getPinBits(const Register reg, PinId pin, PinWidthBits width)
+		std::uint8_t getPinBits(Register reg, PinId pin, PinWidthBits width)
 		{
 			const Register mask{ helpers::fieldMask(pin, width) };
 			const auto pinPosition{ helpers::getPinPosition(pin, width) };
@@ -42,23 +40,28 @@ namespace gpio
 	{
 		helpers::validatePin(pin);
 
-		const auto pupdrV{ getPinBits(port.pupdr, pin, PinWidthBits::two) };
-		if (pupdrV == constants::reservedPullEncoding) return std::nullopt;
-		const auto otyperV{ getPinBits(port.otyper, pin, PinWidthBits::one) };
-		const auto ospeedrV{ getPinBits(port.ospeedr, pin, PinWidthBits::two) };
-		const auto moderV{ getPinBits(port.moder, pin, PinWidthBits::two) };
+		const auto pullBits{ getPinBits(port.pupdr, pin, PinWidthBits::two) };
+
+		if (pullBits == constants::reservedPullEncoding)
+		{
+			return std::nullopt;
+		}
+
+		const auto typeBits{ getPinBits(port.otyper, pin, PinWidthBits::one) };
+		const auto speedBits{ getPinBits(port.ospeedr, pin, PinWidthBits::two) };
+		const auto modeBits{ getPinBits(port.moder, pin, PinWidthBits::two) };
 
 		return PinConfig{
-			.mode = static_cast<PinMode>(moderV),
-			.outputType = static_cast<OutputType>(otyperV),
-			.speed = static_cast<Speed>(ospeedrV),
-			.pull = static_cast<Pull>(pupdrV),
+			.mode = static_cast<PinMode>(modeBits),
+			.outputType = static_cast<OutputType>(typeBits),
+			.speed = static_cast<Speed>(speedBits),
+			.pull = static_cast<Pull>(pullBits),
 		};
 	}
 
 	void applyBsrr(GpioPort& port, Register bsrr)
 	{
-		const Register bsrrReset{ static_cast<std::uint16_t>(bsrr >> constants::registerHalf) };
+		const Register bsrrReset{ static_cast<std::uint16_t>(bsrr >> constants::pinsPerPort) };
 		const Register bsrrSet{ static_cast<std::uint16_t>(bsrr) };
 
 		port.odr &= ~bsrrReset;
