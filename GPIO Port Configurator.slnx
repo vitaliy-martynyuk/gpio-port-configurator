@@ -3,5 +3,5 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Project Path="GPIO Port Configurator.vcxproj" />
+  <Project Path="GPIO Port Configurator.vcxproj" Id="66fb60ba-d0c4-47f6-92c7-19a57a60034e" />
 </Solution>
