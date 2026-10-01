@@ -12,6 +12,7 @@ namespace gpio
 		inline constexpr PinId maxPin{ 15 };
 		inline constexpr PinId minPin{ 0 };
 		inline constexpr std::uint8_t reservedPullEncoding{ 0b11 };
+		inline constexpr std::uint8_t registerHalf{ 16 };
 	}
 }
 

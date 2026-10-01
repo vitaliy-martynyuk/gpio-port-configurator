@@ -55,4 +55,13 @@ namespace gpio
 			.pull = static_cast<Pull>(pupdrV),
 		};
 	}
+
+	void applyBsrr(GpioPort& port, Register bsrr)
+	{
+		const Register bsrrReset{ static_cast<std::uint16_t>(bsrr >> constants::registerHalf) };
+		const Register bsrrSet{ static_cast<std::uint16_t>(bsrr) };
+
+		port.odr &= ~bsrrReset;
+		port.odr |= bsrrSet;
+	}
 }
