@@ -2,6 +2,8 @@
 #include "_tests.h"
 #include <cstdint>
 #include <optional>
+#include <cassert>
+#include <cstdlib>
 
 namespace gpio
 {
@@ -81,24 +83,28 @@ namespace gpio
 		for (PinId pin{ 0 }; pin < constants::pinsPerPort; ++pin)
 		{
 			const auto pinOdrValue{ getPinBits(port.odr, pin, PinWidthBits::one) };
-			const auto pinModeValue{ getPinBits(port.moder, pin, PinWidthBits::two) };
-			const auto pinOutputTypeValue{ getPinBits(port.otyper, pin, PinWidthBits::two) };
+			const auto pinModeValue{ static_cast<PinMode>(getPinBits(port.moder, pin, PinWidthBits::two)) };
+			const auto pinOutputTypeValue{ static_cast<OutputType>(getPinBits(port.otyper, pin, PinWidthBits::one)) };
 			const auto pinExternalValue{ getPinBits(externalLevels, pin, PinWidthBits::one) };
 			std::uint8_t pinIdrValue{};
 
-			if (pinModeValue == static_cast<std::uint8_t>(PinMode::analog))
+			if (pinModeValue == PinMode::analog)
 			{
 				pinIdrValue = 0;
 			}
-			else if (pinModeValue == static_cast<std::uint8_t>(PinMode::output))
+			else if (pinModeValue == PinMode::output)
 			{
 				switch (pinOutputTypeValue)
 				{
-				case static_cast<std::uint8_t>(OutputType::pushPull):
+				case OutputType::pushPull:
 					pinIdrValue = pinOdrValue;
 					break;
-				case static_cast<std::uint8_t>(OutputType::openDrain):
-					pinIdrValue = !pinOdrValue ? 0 : pinExternalValue;
+				case OutputType::openDrain:
+					pinIdrValue = pinOdrValue ? pinExternalValue : 0;
+					break;
+				default:
+					assert(false && "Invalid pin OutputType!");
+					std::abort();
 				}
 			}
 			else
