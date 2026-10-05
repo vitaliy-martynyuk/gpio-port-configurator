@@ -115,4 +115,11 @@ namespace gpio
 			setPinBits(port.idr, pin, PinWidthBits::one, pinIdrValue);
 		}
 	}
+
+	bool readPin(const GpioPort& port, PinId pin)
+	{
+		helpers::validatePin(pin);
+
+		return static_cast<bool>(getPinBits(port.idr, pin, PinWidthBits::one));
+	}
 }
