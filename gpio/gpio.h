@@ -17,7 +17,10 @@ namespace gpio
 	void sampleInputs(GpioPort& port, RegisterHalf externalLevels);
 	[[nodiscard]] bool readPin(const GpioPort& port, PinId pin);
 	template <typename T>
-	T changedBits(const Snapshot<T>& snapshot) {};
+	T changedBits(const Snapshot<T>& snapshot)
+	{
+		return static_cast<T>(snapshot.before ^ snapshot.after);
+	};
 }
 
 #endif

@@ -100,7 +100,7 @@ namespace gpio
 					pinIdrValue = pinOdrValue;
 					break;
 				case OutputType::openDrain:
-					pinIdrValue = pinOdrValue ? pinExternalValue : 0;
+					pinIdrValue = pinOdrValue ? pinExternalValue : 0u;
 					break;
 				default:
 					assert(false && "Invalid pin OutputType!");
