@@ -18,7 +18,9 @@ namespace gpio
 			if (!diff)
 			{
 				std::cout << std::left
-					<< std::setw(nameWidth) << name << " (no changes)\n";
+					<< std::setw(nameWidth) << name << "(no changes)\n";
+
+				return;
 			}
 
 			std::cout << std::left
