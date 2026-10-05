@@ -1,5 +1,5 @@
-#ifndef HELPERS_H
-#define HELPERS_H
+#ifndef GPIO_HELPERS_H
+#define GPIO_HELPERS_H
 
 #include "_types.h"
 #include "_enums.h"
@@ -14,12 +14,13 @@ namespace gpio
 	{
 		inline constexpr bool isPinValid(PinId pin)
 		{
-			return pin <= gpio::constants::maxPin;
+			return pin <= constants::maxPin;
 		}
 
 		inline constexpr void validatePin(PinId pin)
 		{
-			if (!helpers::isPinValid(pin)) {
+			if (!isPinValid(pin))
+			{
 				assert(false && "Invalid pin ID!");
 				std::abort();
 			}

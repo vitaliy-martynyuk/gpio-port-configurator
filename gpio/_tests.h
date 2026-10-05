@@ -1,5 +1,5 @@
-#ifndef TESTS_H
-#define TESTS_H
+#ifndef GPIO_TESTS_H
+#define GPIO_TESTS_H
 
 #include "_helpers.h"
 #include "_enums.h"
@@ -12,7 +12,7 @@ static_assert(sizeof(gpio::GpioPort) == 24);
 
 static_assert(gpio::helpers::isPinValid(gpio::constants::minPin));
 static_assert(gpio::helpers::isPinValid(gpio::constants::maxPin));
-static_assert(!gpio::helpers::isPinValid(16));
+static_assert(!gpio::helpers::isPinValid(gpio::constants::maxPin + 1));
 
 static_assert(gpio::helpers::fieldMask(gpio::constants::minPin, gpio::PinWidthBits::one) == 0b1);
 static_assert(gpio::helpers::fieldMask(gpio::constants::minPin, gpio::PinWidthBits::two) == 0b11);
@@ -38,5 +38,7 @@ static_assert(static_cast<std::uint8_t>(gpio::Pull::down) == 0b10);
 
 static_assert(static_cast<std::uint8_t>(gpio::PinWidthBits::one) == 1);
 static_assert(static_cast<std::uint8_t>(gpio::PinWidthBits::two) == 2);
+
+static_assert(gpio::constants::pinsPerPort == sizeof(gpio::RegisterHalf) * 8);
 
 #endif

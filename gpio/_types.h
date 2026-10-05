@@ -1,5 +1,5 @@
-#ifndef TYPES_H
-#define TYPES_H
+#ifndef GPIO_TYPES_H
+#define GPIO_TYPES_H
 
 #include "_enums.h"
 #include <cstdint>
@@ -8,6 +8,7 @@ namespace gpio
 {
 	using PinId = std::uint8_t;
 	using Register = std::uint32_t;
+	using RegisterHalf = std::uint16_t;
 
 	struct PinConfig
 	{
@@ -36,6 +37,12 @@ namespace gpio
 
 	template <typename T>
 	Snapshot(T, T) -> Snapshot<T>;
+
+	template <typename T>
+	[[nodiscard]] T changedBits(const Snapshot<T>& snapshot)
+	{
+		return static_cast<T>(snapshot.before ^ snapshot.after);
+	}
 }
 
 #endif

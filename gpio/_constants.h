@@ -1,5 +1,5 @@
-#ifndef CONSTANTS_H
-#define CONSTANTS_H
+#ifndef GPIO_CONSTANTS_H
+#define GPIO_CONSTANTS_H
 
 #include "_types.h"
 #include <cstdint>
