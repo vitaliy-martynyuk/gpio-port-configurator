@@ -78,37 +78,35 @@ namespace gpio
 
 	void sampleInputs(GpioPort& port, RegisterHalf externalLevels)
 	{
-		for (std::uint8_t i = 0; i < constants::pinsPerPort; ++i)
+		for (PinId pin{ 0 }; pin < constants::pinsPerPort; ++pin)
 		{
-			const auto pinConfig{ readPinConfig(port, i) };
-			if (!pinConfig)
+			const auto pinOdrValue{ getPinBits(port.odr, pin, PinWidthBits::one) };
+			const auto pinModeValue{ getPinBits(port.moder, pin, PinWidthBits::two) };
+			const auto pinOutputTypeValue{ getPinBits(port.otyper, pin, PinWidthBits::two) };
+			const auto pinExternalValue{ getPinBits(externalLevels, pin, PinWidthBits::one) };
+			std::uint8_t pinIdrValue{};
+
+			if (pinModeValue == static_cast<std::uint8_t>(PinMode::analog))
 			{
-				continue;
+				pinIdrValue = 0;
+			}
+			else if (pinModeValue == static_cast<std::uint8_t>(PinMode::output))
+			{
+				switch (pinOutputTypeValue)
+				{
+				case static_cast<std::uint8_t>(OutputType::pushPull):
+					pinIdrValue = pinOdrValue;
+					break;
+				case static_cast<std::uint8_t>(OutputType::openDrain):
+					pinIdrValue = !pinOdrValue ? 0 : pinExternalValue;
+				}
+			}
+			else
+			{
+				pinIdrValue = pinExternalValue;
 			}
 
-			const Register odrPinValue{ port.odr & (~(1 << i)) };
-
-			if (
-				pinConfig->mode == PinMode::analog
-				|| (pinConfig->mode == PinMode::output && pinConfig->outputType == OutputType::openDrain && !odrPinValue))
-			{
-				setPinBits(port.idr, i, PinWidthBits::one, 0);
-			}
-			else if (
-				pinConfig->mode == PinMode::input
-				|| pinConfig->mode == PinMode::alternate
-				|| (pinConfig->mode == PinMode::output && pinConfig->outputType == OutputType::openDrain && odrPinValue)
-				)
-			{
-				setPinBits(port.idr, i, PinWidthBits::one, (externalLevels & (1 << i)));
-			}
-			else if (
-				pinConfig->mode == PinMode::output
-				&& pinConfig->outputType == OutputType::pushPull
-				)
-			{
-				setPinBits(port.idr, i, PinWidthBits::one, (odrPinValue & (1 << i)));
-			}
+			setPinBits(port.idr, pin, PinWidthBits::one, pinIdrValue);
 		}
 	}
 }
