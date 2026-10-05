@@ -67,4 +67,12 @@ namespace gpio
 		port.odr &= ~bsrrReset;
 		port.odr |= bsrrSet;
 	}
+
+	void writePin(GpioPort& port, PinId pin, bool level)
+	{
+		helpers::validatePin(pin);
+
+		Register pinBsrr{ 1u << (level ? pin : pin + 16) };
+		applyBsrr(port, pinBsrr);
+	}
 }
