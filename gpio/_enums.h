@@ -2,6 +2,8 @@
 #define GPIO_ENUMS_H
 
 #include <cstdint>
+#include <string_view>
+#include <ostream>
 
 namespace gpio
 {

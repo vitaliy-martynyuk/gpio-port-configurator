@@ -3,6 +3,7 @@
 
 #include "_enums.h"
 #include <cstdint>
+#include <ostream>
 
 namespace gpio
 {
@@ -37,6 +38,12 @@ namespace gpio
 
 	template <typename T>
 	Snapshot(T, T) -> Snapshot<T>;
+
+	template <typename T>
+	[[nodiscard]] T changedBits(const Snapshot<T>& snapshot)
+	{
+		return static_cast<T>(snapshot.before ^ snapshot.after);
+	}
 }
 
 #endif

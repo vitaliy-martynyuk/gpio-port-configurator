@@ -21,6 +21,9 @@
     <ClCompile Include="gpio\gpio.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="gpio\_names.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="gpio\_types.h">
@@ -39,6 +42,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="gpio\gpio.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gpio\_names.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

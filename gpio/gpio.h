@@ -5,6 +5,7 @@
 #include "_enums.h"
 #include "_helpers.h"
 #include "_types.h"
+#include "_names.h"
 #include <optional>
 #include <cstdint>
 
@@ -16,11 +17,6 @@ namespace gpio
 	void writePin(GpioPort& port, PinId pin, bool level);
 	void sampleInputs(GpioPort& port, RegisterHalf externalLevels);
 	[[nodiscard]] bool readPin(const GpioPort& port, PinId pin);
-	template <typename T>
-	T changedBits(const Snapshot<T>& snapshot)
-	{
-		return static_cast<T>(snapshot.before ^ snapshot.after);
-	};
 }
 
 #endif

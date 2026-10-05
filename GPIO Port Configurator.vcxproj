@@ -146,6 +146,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="gpio\gpio.cpp" />
+    <ClCompile Include="gpio\_names.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -153,6 +154,7 @@
     <ClInclude Include="gpio\_constants.h" />
     <ClInclude Include="gpio\_enums.h" />
     <ClInclude Include="gpio\_helpers.h" />
+    <ClInclude Include="gpio\_names.h" />
     <ClInclude Include="gpio\_tests.h" />
     <ClInclude Include="gpio\_types.h" />
   </ItemGroup>
