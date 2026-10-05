@@ -11,14 +11,15 @@ namespace gpio
 	{
 		void printRegisterDiff(std::string_view name, const Snapshot<Register>& registerSnapshot)
 		{
+			constexpr int nameWidth{ 8 };
+			constexpr int labelWidth{ 8 };
+
 			const auto diff{ changedBits(registerSnapshot) };
 			if (!diff)
 			{
-				return;
+				std::cout << std::left
+					<< std::setw(nameWidth) << name << " (no changes)\n";
 			}
-
-			constexpr int nameWidth{ 8 };
-			constexpr int labelWidth{ 8 };
 
 			std::cout << std::left
 				<< std::setw(nameWidth) << name << std::setw(labelWidth) << "before" << std::bitset<32>{ registerSnapshot.before } << '\n'
@@ -29,11 +30,11 @@ namespace gpio
 
 	void printPortDiff(const Snapshot<GpioPort>& snapshot)
 	{
-		printRegisterDiff("moder", Snapshot<Register>{.before{ snapshot.before.moder }, .after{ snapshot.after.moder }});
-		printRegisterDiff("otyper", Snapshot<Register>{.before{ snapshot.before.otyper }, .after{ snapshot.after.otyper }});
-		printRegisterDiff("ospeedr", Snapshot<Register>{.before{ snapshot.before.ospeedr }, .after{ snapshot.after.ospeedr }});
-		printRegisterDiff("pupdr", Snapshot<Register>{.before{ snapshot.before.pupdr }, .after{ snapshot.after.pupdr }});
-		printRegisterDiff("idr", Snapshot<Register>{.before{ snapshot.before.idr }, .after{ snapshot.after.idr }});
-		printRegisterDiff("odr", Snapshot<Register>{.before{ snapshot.before.odr }, .after{ snapshot.after.odr }});
+		printRegisterDiff("moder", Snapshot{ snapshot.before.moder, snapshot.after.moder });
+		printRegisterDiff("otyper", Snapshot{ snapshot.before.otyper, snapshot.after.otyper });
+		printRegisterDiff("ospeedr", Snapshot{ snapshot.before.ospeedr, snapshot.after.ospeedr });
+		printRegisterDiff("pupdr", Snapshot{ snapshot.before.pupdr, snapshot.after.pupdr });
+		printRegisterDiff("idr", Snapshot{ snapshot.before.idr, snapshot.after.idr });
+		printRegisterDiff("odr", Snapshot{ snapshot.before.odr, snapshot.after.odr });
 	}
 }

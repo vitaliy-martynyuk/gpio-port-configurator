@@ -3,7 +3,6 @@
 
 #include "_enums.h"
 #include <cstdint>
-#include <ostream>
 
 namespace gpio
 {
