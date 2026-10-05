@@ -39,6 +39,6 @@ static_assert(static_cast<std::uint8_t>(gpio::Pull::down) == 0b10);
 static_assert(static_cast<std::uint8_t>(gpio::PinWidthBits::one) == 1);
 static_assert(static_cast<std::uint8_t>(gpio::PinWidthBits::two) == 2);
 
-static_assert(gpio::constants::pinsPerPort == sizeof(std::uint16_t) * 8);
+static_assert(gpio::constants::pinsPerPort == sizeof(gpio::RegisterHalf) * 8);
 
 #endif

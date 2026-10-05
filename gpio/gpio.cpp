@@ -61,8 +61,8 @@ namespace gpio
 
 	void applyBsrr(GpioPort& port, Register bsrr)
 	{
-		const Register bsrrReset{ static_cast<std::uint16_t>(bsrr >> constants::pinsPerPort) };
-		const Register bsrrSet{ static_cast<std::uint16_t>(bsrr) };
+		const Register bsrrReset{ static_cast<RegisterHalf>(bsrr >> constants::pinsPerPort) };
+		const Register bsrrSet{ static_cast<RegisterHalf>(bsrr) };
 
 		port.odr &= ~bsrrReset;
 		port.odr |= bsrrSet;
@@ -72,7 +72,43 @@ namespace gpio
 	{
 		helpers::validatePin(pin);
 
-		Register pinBsrr{ 1u << (level ? pin : pin + 16) };
+		const Register pinBsrr{ 1u << (level ? pin : pin + constants::pinsPerPort) };
 		applyBsrr(port, pinBsrr);
+	}
+
+	void sampleInputs(GpioPort& port, RegisterHalf externalLevels)
+	{
+		for (std::uint8_t i = 0; i < constants::pinsPerPort; ++i)
+		{
+			const auto pinConfig{ readPinConfig(port, i) };
+			if (!pinConfig)
+			{
+				continue;
+			}
+
+			const Register odrPinValue{ port.odr & (~(1 << i)) };
+
+			if (
+				pinConfig->mode == PinMode::analog
+				|| (pinConfig->mode == PinMode::output && pinConfig->outputType == OutputType::openDrain && !odrPinValue))
+			{
+				setPinBits(port.idr, i, PinWidthBits::one, 0);
+			}
+			else if (
+				pinConfig->mode == PinMode::input
+				|| pinConfig->mode == PinMode::alternate
+				|| (pinConfig->mode == PinMode::output && pinConfig->outputType == OutputType::openDrain && odrPinValue)
+				)
+			{
+				setPinBits(port.idr, i, PinWidthBits::one, (externalLevels & (1 << i)));
+			}
+			else if (
+				pinConfig->mode == PinMode::output
+				&& pinConfig->outputType == OutputType::pushPull
+				)
+			{
+				setPinBits(port.idr, i, PinWidthBits::one, (odrPinValue & (1 << i)));
+			}
+		}
 	}
 }

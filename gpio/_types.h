@@ -8,6 +8,7 @@ namespace gpio
 {
 	using PinId = std::uint8_t;
 	using Register = std::uint32_t;
+	using RegisterHalf = std::uint16_t;
 
 	struct PinConfig
 	{
